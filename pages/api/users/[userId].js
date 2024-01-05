@@ -1,5 +1,6 @@
 import clientPromise from "../../../lib/mongodb";
 import { ObjectId } from "mongodb";
+import getResponse from "../../../lib/response";
 export default async function handler(req, res) {
   try {
     const client = await clientPromise;
@@ -7,13 +8,7 @@ export default async function handler(req, res) {
     const User = db.collection("users");
     const userId = req.query.userId;
     const user = await User.findOne({ _id: new ObjectId(userId) });
-    res.status(200).json({
-      status: 200,
-      message: "Success",
-      data: {
-        user,
-      },
-    });
+    res.status(200).json(getResponse({ user }, 200));
   } catch (error) {
     console.error("Error handling request:", error);
     res.status(500).json({ error: "Internal Server Error" });
