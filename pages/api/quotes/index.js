@@ -4,6 +4,7 @@ import jwt from "jsonwebtoken";
 import { ObjectId } from "mongodb";
 
 const checkAuthorization = (req) => {
+  console.log(req.headers.authorization);
   const { authorization } = req.headers;
   if (authorization) {
     const { userId } = jwt.verify(authorization, process.env.JWT_SECRET);

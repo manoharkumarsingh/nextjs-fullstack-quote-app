@@ -49,6 +49,7 @@ const Login = () => {
       })
       .then((res) => res.data)
       .catch((err) => err);
+    console.log(response);
 
     if (!response) {
       setStatus({
@@ -57,16 +58,20 @@ const Login = () => {
         error: true,
         inputData: true,
       });
-    } else if (response.status == 200 && response.data.token) {
-      localStorage.setItem("token", response.data.token);
+    } else if (
+      response.status == 200 &&
+      response.result &&
+      response.result.token
+    ) {
       router.push("/");
+      localStorage.setItem("token", response.result.token);
       setStatus({
         ...prevStatus,
         loading: false,
         error: false,
         inputData: true,
       });
-    } else if (response.status == 200 && !response.data.token) {
+    } else if (response.status == 200) {
       setStatus({
         ...prevStatus,
         loading: false,

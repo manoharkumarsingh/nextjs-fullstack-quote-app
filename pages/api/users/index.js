@@ -15,6 +15,7 @@ export default async function handler(req, res) {
       case "POST": {
         const userNew = req.body.userNew;
         const user = await User.findOne({ email: userNew.email });
+
         if (user) {
           res
             .status(400)
@@ -31,7 +32,7 @@ export default async function handler(req, res) {
           ...userNew,
           password: hashedPassword,
         };
-        await User.insertOne({ newUser });
+        await User.insertOne({ ...newUser });
         res.status(201).json(getResponse({ data: newUser }, 201));
         break;
       }

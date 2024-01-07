@@ -3,7 +3,9 @@ import TextField from "@mui/material/TextField";
 import Button from "@mui/material/Button";
 import Typography from "@mui/material/Typography";
 import Link from "next/link";
+import axios from "axios";
 import Alert from "@mui/material/Alert";
+import Loader from "@/components/loader";
 
 interface userInput {
   firstName: String;
@@ -13,6 +15,12 @@ interface userInput {
 }
 
 const Signup = () => {
+  const [status, setStatus] = useState({
+    loading: false,
+    error: false,
+  });
+
+  const [message, setMessage] = useState("");
   const [userInput, setUserInput] = useState<userInput>({
     firstName: "",
     lastName: "",
@@ -27,16 +35,55 @@ const Signup = () => {
     };
     setUserInput(userInputState);
   };
-  const handleSubmit = () => {};
+  const handleSubmit = async () => {
+    setStatus({
+      loading: true,
+      error: false,
+    });
+    setMessage("");
+    const response = await axios
+      .post("/api/users", {
+        userNew: { ...userInput },
+      })
+      .then((res) => {
+        setUserInput({
+          firstName: "",
+          lastName: "",
+          password: "",
+          email: "",
+        });
+        setStatus({
+          loading: false,
+          error: false,
+        });
+        setMessage("User successfully created");
+      })
+      .catch((err) => {
+        setStatus({
+          loading: false,
+          error: true,
+        });
+        if (err.response.data.error) {
+          setMessage(err.response.data.error);
+        } else {
+          setMessage("Internal server error, Please try again!!");
+        }
+      });
+  };
+
+  if (status.loading) {
+    return <Loader></Loader>;
+  }
 
   return (
     <div className="flex justify-center items-center  ">
       <div className="mt-8">
-        {/* {data && data.user && (
-          <Alert severity="success">
-            {data.user.firstName} is SignedUp. You can login now!
-          </Alert>
-        )} */}
+        {(!status.error && message && (
+          <Alert severity="success">{message}</Alert>
+        )) ||
+          (status.error && message && (
+            <Alert severity="error">{message}</Alert>
+          ))}
         <Typography className="flex justify-center" variant="h4" gutterBottom>
           Signup!!
         </Typography>
