@@ -8,7 +8,7 @@ export default function App({ Component, pageProps }: AppProps) {
       <div className="navbar-container">
         <Navbar></Navbar>
       </div>
-      <div className="app-container flex justify-center">
+      <div className="app-container flex justify-center mt-20">
         <Component {...pageProps} />
       </div>
     </div>

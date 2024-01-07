@@ -1,3 +1,9 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+.header {
+  position: fixed;
+  top: 0;
+  width: 100%;
+}
