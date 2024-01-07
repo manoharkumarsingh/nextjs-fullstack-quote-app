@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-
+import Image from "next/image";
 import axios from "axios";
 import List from "@mui/material/List";
 import ListItem from "@mui/material/ListItem";
@@ -36,10 +36,13 @@ const Profile = () => {
       <div className="profile-details">
         {user && user.length > 0 && (
           <div>
-            <img
+            <Image
               src={`https://robohash.org/${user[0].firstName}.png?size=200x200`}
-              alt="pic"
+              width={200}
+              height={200}
+              alt="Picture of the author"
             />
+
             <Typography variant="h6">
               Name : {user[0].firstName + " " + user[0].lastName}
             </Typography>

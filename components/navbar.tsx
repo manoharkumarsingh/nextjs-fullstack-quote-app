@@ -16,6 +16,7 @@ interface NavigationItem {
 
 const Navbar = () => {
   const [navigation, setNavigation] = useState<NavigationItem[]>([]);
+  const [token, setToken] = useState<string | null>(null);
   useEffect(() => {
     if (localStorage.getItem("token")) {
       setNavigation([
@@ -31,7 +32,13 @@ const Navbar = () => {
         { name: "Signup", href: "/signup", current: false },
       ]);
     }
-  }, [typeof window !== "undefined" && localStorage.getItem("token")]);
+  }, [token]);
+
+  useEffect(() => {
+    if (typeof window !== "undefined" && localStorage.getItem("token")) {
+      setToken(localStorage.getItem("token"));
+    }
+  });
 
   const handleLogout = () => {
     localStorage.removeItem("token");

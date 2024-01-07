@@ -123,7 +123,7 @@ const Login = () => {
         </div>
         <div className="mt-10 ">
           <Link className="text-[#039be5]" href={"/signup"}>
-            Don't have an account ?
+            Donot have an account ?
           </Link>
         </div>
         <div className="mt-4">

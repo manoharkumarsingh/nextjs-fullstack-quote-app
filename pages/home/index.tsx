@@ -3,11 +3,10 @@ import List from "@mui/material/List";
 import ListItem from "@mui/material/ListItem";
 import Divider from "@mui/material/Divider";
 import ListItemText from "@mui/material/ListItemText";
-import ListItemAvatar from "@mui/material/ListItemAvatar";
-import Avatar from "@mui/material/Avatar";
 import Typography from "@mui/material/Typography";
 import axios from "axios";
 import Link from "next/link";
+import Image from "next/image";
 
 interface User {
   _id: String;
@@ -44,10 +43,13 @@ const Home: React.FC = () => {
           return (
             <>
               <ListItem alignItems="flex-start">
-                <img
+                <Image
                   src={`https://robohash.org/${quote.user.firstName}.png?size=50x50`}
-                  alt="pic"
+                  width={50}
+                  height={50}
+                  alt="Picture of the author"
                 />
+
                 <ListItemText
                   primary={
                     <React.Fragment>

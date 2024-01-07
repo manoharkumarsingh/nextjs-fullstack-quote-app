@@ -8,7 +8,7 @@ import ListItemText from "@mui/material/ListItemText";
 import ListItemAvatar from "@mui/material/ListItemAvatar";
 import Avatar from "@mui/material/Avatar";
 import Typography from "@mui/material/Typography";
-import Card from "@mui/material/Card";
+import Image from "next/image";
 
 const Userprofile = () => {
   const router = useRouter();
@@ -36,10 +36,13 @@ const Userprofile = () => {
       <div className="profile-details">
         {quotes && quotes.length > 0 && (
           <div>
-            <img
+            <Image
               src={`https://robohash.org/${quotes[0].user.firstName}.png?size=200x200`}
-              alt="pic"
+              width={200}
+              height={200}
+              alt="Picture of the author"
             />
+
             <Typography variant="h6">
               Name : {quotes[0].user.firstName + " " + quotes[0].user.lastName}
             </Typography>
