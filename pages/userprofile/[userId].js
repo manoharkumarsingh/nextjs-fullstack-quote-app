@@ -35,12 +35,13 @@ const Userprofile = () => {
     <div>
       <div className="profile-details">
         {quotes && quotes.length > 0 && (
-          <div>
+          <div className="border-2 border-black ">
             <Image
               src={`https://robohash.org/${quotes[0].user.firstName}.png?size=200x200`}
               width={200}
               height={200}
               alt="Picture of the author"
+              className="ml-28 mb-6"
             />
 
             <Typography variant="h6">
@@ -50,7 +51,7 @@ const Userprofile = () => {
           </div>
         )}
       </div>
-      <List sx={{ width: "100%", maxWidth: 360, bgcolor: "background.paper" }}>
+      <List sx={{ width: "100%", maxWidth: 500, bgcolor: "background.paper" }}>
         {quotes &&
           quotes.length > 0 &&
           quotes.map((quote) => {
