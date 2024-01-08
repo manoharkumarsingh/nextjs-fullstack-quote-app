@@ -7,3 +7,10 @@
   top: 0;
   width: 100%;
 }
+
+.profile-details {
+  text-align: center;
+}
+.css-uls1yk-MuiDivider-root {
+  margin-left: unset !important;
+}

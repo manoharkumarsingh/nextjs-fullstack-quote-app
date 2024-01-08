@@ -8,10 +8,20 @@ import ListItemText from "@mui/material/ListItemText";
 import ListItemAvatar from "@mui/material/ListItemAvatar";
 import Avatar from "@mui/material/Avatar";
 import Typography from "@mui/material/Typography";
+import Loader from "@/components/loader";
+import Error from "@/components/error";
 
 const Profile = () => {
   const [user, setUser] = useState([]);
+  const [status, setStatus] = useState({
+    loading: false,
+    error: false,
+  });
   useEffect(() => {
+    setStatus({
+      loading: true,
+      error: false,
+    });
     const fetch = async () => {
       await axios
         .get("/api/users/userId", {
@@ -20,27 +30,42 @@ const Profile = () => {
           },
         })
         .then((response) => {
+          setStatus({
+            loading: false,
+            error: false,
+          });
           if (response.status == 200) {
             setUser(response.data.result.user);
           }
         })
         .catch((error) => {
+          setStatus({
+            loading: false,
+            error: true,
+          });
           console.log("Internal server error");
         });
     };
     fetch();
   }, []);
 
+  if (status.loading) {
+    return <Loader></Loader>;
+  } else if (status.error) {
+    return <Error></Error>;
+  }
+
   return (
     <div>
       <div className="profile-details">
         {user && user.length > 0 && (
-          <div>
+          <div className="border-2 border-black ">
             <Image
               src={`https://robohash.org/${user[0].firstName}.png?size=200x200`}
               width={200}
               height={200}
               alt="Picture of the author"
+              className="ml-20 mb-6"
             />
 
             <Typography variant="h6">
@@ -50,7 +75,7 @@ const Profile = () => {
           </div>
         )}
       </div>
-      <List sx={{ width: "100%", maxWidth: 360, bgcolor: "background.paper" }}>
+      <List sx={{ width: "100%", maxWidth: 500, bgcolor: "background.paper" }}>
         {user &&
           user.length > 0 &&
           user.map((ur) => {
@@ -64,19 +89,7 @@ const Profile = () => {
                     />
                   </ListItemAvatar>
                   <ListItemText
-                    primary={
-                      <React.Fragment>
-                        <Typography
-                          sx={{ display: "inline" }}
-                          component="span"
-                          variant="body2"
-                          color="text.primary"
-                        >
-                          ~{ur.firstName}
-                        </Typography>
-                        — {ur.quotes.name}
-                      </React.Fragment>
-                    }
+                    primary={<React.Fragment>{ur.quotes.name}</React.Fragment>}
                   />
                 </ListItem>
                 <Divider variant="inset" component="li" />

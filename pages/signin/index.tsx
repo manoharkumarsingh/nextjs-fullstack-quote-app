@@ -49,7 +49,6 @@ const Login = () => {
       })
       .then((res) => res.data)
       .catch((err) => err);
-    console.log(response);
 
     if (!response) {
       setStatus({
